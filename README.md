@@ -1,2 +1,2 @@
-# sports-manager
+# contao-sports-manager
 Nachfolger vom Contao Leaguemanager

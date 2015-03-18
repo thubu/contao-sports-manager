@@ -1,7 +1,7 @@
 # contao-sports-manager
 Nachfolger vom Contao Leaguemanager
 
-Eine Turnier- und Ligenverwaltung für das CMS Contao.
+Eine Turnier- und Ligenverwaltung für das CMS Contao 3.4.x
 
 Diese kostenlose Erweiterung erlaubt das Verwalten von Turnieren und Ligen.
 

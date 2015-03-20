@@ -9,9 +9,9 @@
 
 
 /**
- * Table tl_spoma_clubs
+ * Table tl_spoma_players
  */
-$GLOBALS['TL_DCA']['tl_spoma_clubs'] = array
+$GLOBALS['TL_DCA']['tl_spoma_players'] = array
 (
 
 	// Config
@@ -38,8 +38,8 @@ $GLOBALS['TL_DCA']['tl_spoma_clubs'] = array
 		),
 		'label' => array
 		(
-			'fields'                  => array('name','shortname'),
-			'format'                  => '%s (%s)'
+			'fields'                  => array('name','firstname','shortname'),
+			'format'                  => '%s, %s (%s)'
 		),
 		'global_operations' => array
 		(
@@ -55,37 +55,36 @@ $GLOBALS['TL_DCA']['tl_spoma_clubs'] = array
 		(
 			'edit' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['edit'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_spoma_players']['edit'],
 				'href'                => 'act=edit',
-				'icon'                => 'edit.gif',
-				'attributes'          => 'class="contextmenu"'
+				'icon'                => 'edit.gif'
 			),
 			'copy' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['copy'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_spoma_players']['copy'],
 				'href'                => 'act=copy',
 				'icon'                => 'copy.gif'
 			),
 			'delete' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['delete'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_spoma_players']['delete'],
 				'href'                => 'act=delete',
 				'icon'                => 'delete.gif',
 				'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"'
 			),
 			'show' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['show'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_spoma_players']['show'],
 				'href'                => 'act=show',
 				'icon'                => 'show.gif'
 			),
-			'assignteams' => array
+			'assign_teams' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['assignteams'],
-				'href'                => 'table=tl_spoma_teams_to_club',
-				'icon'                => 'edit.gif',
-				'attributes'          => 'class="contextmenu"'
+				'label'               => &$GLOBALS['TL_LANG']['tl_spoma_players']['assign_teams'],
+				'href'                => 'table=tl_spoma_players_to_team',
+				'icon'                => 'edit.gif'
 			)
+
 		)
 	),
 
@@ -93,14 +92,11 @@ $GLOBALS['TL_DCA']['tl_spoma_clubs'] = array
 	'palettes' => array
 	(
 		'__selector__'                => 	array('hasinternal_page'),
-		'default'                     => 	'name, shortname, sortstring, logo;
-											ownclub;
-											{club_adress}, street, street_number, zipcode, city, state, country;
-											{contact_info}, phone, fax, email, website;
-											{add_info},founded, resolved, members, colour;
+		'default'                     => 	'firstname,name,shortname,nickname,sortstring,picture;
+											{player_info}, birthday, diedday, birthplace, nationality, endofcareer;
+											{player_detail}, height, weight, position, foot, playinghand, throwinghand, punchhand;
 											{add_information}, information;
 											{internal_page}, hasinternal_page;'
-
 	),
 
 	// Subpalettes
@@ -110,8 +106,8 @@ $GLOBALS['TL_DCA']['tl_spoma_clubs'] = array
 	),
 
 	// Fields
-
-	'fields' => array 	(
+	'fields' => array
+	(
 
 		'id' => array (
 			'sql' 					  => "int(10) unsigned NOT NULL auto_increment"
@@ -124,11 +120,11 @@ $GLOBALS['TL_DCA']['tl_spoma_clubs'] = array
 		),
 		'name' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['name'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_players']['name'],
 			'exclude'                 => false,
 			'filter'				  => true,
 			'inputType'               => 'text',
-			'eval'                    => array (
+			'eval'                    => array(
 											'mandatory'=>true,
 											'rgxp'=>'alnum',
 											'maxlength'=>255,
@@ -136,15 +132,42 @@ $GLOBALS['TL_DCA']['tl_spoma_clubs'] = array
 												),
 			'sql'					  => "varchar(255) NOT NULL default ''"
 		),
-
-		'shortname' => array
+		'firstname' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['shortname'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_players']['firstname'],
 			'exclude'                 => false,
+			'filter'				  => true,
 			'inputType'               => 'text',
 			'eval'                    => array(
 											'mandatory'=>true,
+											'rgxp'=>'alnum',
 											'maxlength'=>255,
+											'tl_class'=>'w50'
+												),
+			'sql'					  => "varchar(255) NOT NULL default ''"
+		),
+		'shortname' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_players']['shortname'],
+			'exclude'                 => false,
+			'inputType'               => 'text',
+			'eval'                    => array(
+											'mandatory'=>false,
+											'maxlength'=>10,
+											'rgxp'=>'alnum',
+											'unique'=>true,
+											'tl_class'=>'w50'
+												),
+			'sql'					  => "varchar(255) NOT NULL default ''"
+		),
+		'nickname' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_players']['nickname'],
+			'exclude'                 => false,
+			'inputType'               => 'text',
+			'eval'                    => array(
+											'mandatory'=>false,
+											'maxlength'=>25,
 											'rgxp'=>'alnum',
 											'unique'=>true,
 											'tl_class'=>'w50'
@@ -153,7 +176,7 @@ $GLOBALS['TL_DCA']['tl_spoma_clubs'] = array
 		),
 		'sortstring' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['sortstring'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_players']['sortstring'],
 			'exclude'                 => false,
 			'filter'				  => true,
 			'inputType'               => 'text',
@@ -164,81 +187,10 @@ $GLOBALS['TL_DCA']['tl_spoma_clubs'] = array
 												),
 			'sql'					  => "varchar(255) NOT NULL default ''"
 		),
-		'zipcode' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['zipcode'],
-			'exclude'                 => false,
-			'inputType'               => 'text',
-			'eval'                    => array(
-											'mandatory'=>false,
-											'maxlength'=>8,
-											'rgxp'=>'digit',
-											'tl_class'=>'w50'
-												),
-			'sql'					  => "varchar(8) NOT NULL default ''"
-		),
-		'city' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['city'],
-			'exclude'                 => false,
-			'inputType'               => 'text',
-			'eval'                    => array(
-											'mandatory'=>false,
-											'maxlength'=>255,
-											'tl_class'=>'w50'
-												),
-			'sql'					  => "varchar(255) NOT NULL default ''"
-		),
-		'street' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['street'],
-			'exclude'                 => false,
-			'inputType'               => 'text',
-			'eval'                    => array(
-											'mandatory'=>false,
-											'maxlength'=>255,
-											'tl_class'=>'w50'
-												),
-			'sql'					  => "varchar(255) NOT NULL default ''"
-		),
-		'street_number' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['street_number'],
-			'exclude'                 => false,
-			'inputType'               => 'text',
-			'eval'                    => array(
-											'mandatory'=>false,
-											'maxlength'=>255,
-											'tl_class'=>'w50'
-												),
-			'sql'					  => "varchar(255) NOT NULL default ''"
-		),
-		'state' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['state'],
-			'exclude'                 => false,
-			'inputType'               => 'text',
-			'eval'                    => array(
-											'mandatory'=>false,
-											'maxlength'=>255,
-											'tl_class'=>'w50'),
-			'sql'					  => "varchar(255) NOT NULL default ''"
-		),
-		'country' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['country'],
-			'exclude'                 => false,
-			'inputType'               => 'text',
-			'eval'                    => array(
-											'mandatory'=>false,
-											'maxlength'=>255,
-											'tl_class'=>'w50'
-												),
-			'sql'					  => "varchar(255) NOT NULL default ''"
-		),
+
 		'website' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['website'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_players']['website'],
 			'exclude'                 => false,
 			'inputType'               => 'text',
 			'eval'                    => array(
@@ -249,75 +201,119 @@ $GLOBALS['TL_DCA']['tl_spoma_clubs'] = array
 												),
 			'sql'					  => "varchar(255) NOT NULL default ''"
 		),
-		'email' => array
+		'hasinternal_page'=>array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['email'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_players']['hasinternal_page'],
+			'exclude'                 => false,
+			'inputType'               => 'checkbox',
+			'eval'                    => array('submitOnChange'=>true),
+			'sql'					  => "char(1) NOT NULL default ''"
+		),
+		'internal_page' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_players']['internal_page'],
+			'exclude'                 => false,
+			'inputType'               => 'pageTree',
+			'eval'                    => array('mandatory'=>false,'fieldType'=>'radio', 'tl_class'=>'clr'),
+			'sql'					  => "int(10) NOT NULL default '0'"
+		),
+		'picture' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_players']['picture'],
+			'exclude'                 => false,
+			'inputType' 			  => 'fileTree',
+			'eval' 					  => array (
+											'filesOnly' => true,
+											'fieldType' => 'radio',
+											'tl_class' => 'clr',
+											'extensions' =>'jpg, jpeg, png, gif'
+												),
+			'sql' 					  => "binary(16) NULL"
+		),
+		'position' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_players']['position'],
 			'exclude'                 => false,
 			'inputType'               => 'text',
 			'eval'                    => array(
-											'mandatory' => false,
-											'maxlength' => 255,
-											'rgxp' => 'email',
-											'tl_class' => 'w50'
+											'mandatory'=>false,
+											'maxlength'=>25,
+											'rgxp'=>'alnum',
+											'unique'=>true,
+											'tl_class'=>'w50'
 												),
 			'sql'					  => "varchar(255) NOT NULL default ''"
 		),
-		'phone' => array
+		'foot' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['phone'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_players']['foot'],
 			'exclude'                 => false,
 			'inputType'               => 'text',
 			'eval'                    => array(
 											'mandatory'=>false,
-											'maxlength'=>255,
-											'rgxp'=>'phone',
+											'maxlength'=>25,
+											'rgxp'=>'alnum',
+											'unique'=>true,
 											'tl_class'=>'w50'
 												),
-			'sql' 					  => "varchar(255) NOT NULL default ''"
+			'sql'					  => "varchar(255) NOT NULL default ''"
+		),
+		'playinghand' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_players']['playinghand'],
+			'exclude'                 => false,
+			'inputType'               => 'text',
+			'eval'                    => array(
+											'mandatory'=>false,
+											'maxlength'=>25,
+											'rgxp'=>'alnum',
+											'unique'=>true,
+											'tl_class'=>'w50'
+												),
+			'sql'					  => "varchar(255) NOT NULL default ''"
+		),
+		'throwinghand' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_players']['throwinghand'],
+			'exclude'                 => false,
+			'inputType'               => 'text',
+			'eval'                    => array(
+											'mandatory'=>false,
+											'maxlength'=>25,
+											'rgxp'=>'alnum',
+											'unique'=>true,
+											'tl_class'=>'w50'
+												),
+			'sql'					  => "varchar(255) NOT NULL default ''"
+		),
+		'punchhand' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_players']['punchhand'],
+			'exclude'                 => false,
+			'inputType'               => 'text',
+			'eval'                    => array(
+											'mandatory'=>false,
+											'maxlength'=>25,
+											'rgxp'=>'alnum',
+											'unique'=>true,
+											'tl_class'=>'w50'
+												),
+			'sql'					  => "varchar(255) NOT NULL default ''"
+		),
+		'information' => array
+		(
+			'label' 				  => &$GLOBALS['TL_LANG']['tl_spoma_players']['information'],
+		    'exclude' 				  => false,
+		    'inputType' 			  => 'textarea',
+		    'eval' 					  => array(
+		    'rte' 					  => 'tinyMCE'
+		            							),
+		    'sql' 					  => "text NULL"
+        ),
 
-		),
-		'fax' => array
+		'birthday' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['fax'],
-			'exclude'                 => false,
-			'inputType'               => 'text',
-			'eval'                    => array(
-											'mandatory'=>false,
-											'maxlength'=>255,
-											'rgxp'=>'phone',
-											'tl_class'=>'w50'
-												),
-			'sql' 					  => "varchar(255) NOT NULL default ''"
-		),
-		'colour' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['colour'],
-			'exclude'                 => false,
-			'inputType'               => 'text',
-			'eval'                    => array(
-											'mandatory'=>false,
-											'maxlength'=>255,
-											'rgxp'=>'extnd',
-											'tl_class'=>'w50'
-												),
-			'sql' 					  => "varchar(255) NOT NULL default ''"
-		),
-		'founded' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['founded'],
-			'exclude'                 => false,
-			'inputType'               => 'text',
-			'eval'                    => array(
-											'mandatory'=>false,
-											'maxlength'=>10,
-
-											'tl_class'=>'w50'
-												),
-			'sql' 					  => "varchar(255) NOT NULL default ''"
-		),
-		'resolved' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['resolved'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_players']['birthday'],
 			'exclude'                 => false,
 			'inputType'               => 'text',
 			'eval'                    => array(
@@ -329,22 +325,64 @@ $GLOBALS['TL_DCA']['tl_spoma_clubs'] = array
 												),
 			'sql' 					  => "varchar(255) NOT NULL default ''"
 		),
-		'logo' => array
+		'diedday' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['logo'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_players']['diedday'],
 			'exclude'                 => false,
-			'inputType' 			  => 'fileTree',
-			'eval' 					  => array (
-											'filesOnly' => true,
-											'fieldType' => 'radio',
-											'tl_class' => 'clr',
-											'extensions' =>'jpg, jpeg, png, gif'
+			'inputType'               => 'text',
+			'eval'                    => array(
+											'mandatory'=>false,
+											'maxlength'=>10,
+											'rgxp'=>'date',
+											'datepicker'=>$this->getDatePickerString(),
+											'tl_class'=>'w50'
 												),
-			'sql' 					  => "binary(16) NULL"
+			'sql' 					  => "varchar(255) NOT NULL default ''"
 		),
-		'members' => array
+		'endofcareer' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['members'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_players']['endofcareer'],
+			'exclude'                 => false,
+			'inputType'               => 'text',
+			'eval'                    => array(
+											'mandatory'=>false,
+											'maxlength'=>10,
+											'rgxp'=>'date',
+											'datepicker'=>$this->getDatePickerString(),
+											'tl_class'=>'w50'
+												),
+			'sql' 					  => "varchar(255) NOT NULL default ''"
+		),
+		'birthplace' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_players']['birthplace'],
+			'exclude'                 => false,
+			'inputType'               => 'text',
+			'eval'                    => array(
+											'mandatory'=>false,
+											'maxlength'=>25,
+											'rgxp'=>'alnum',
+											'unique'=>true,
+											'tl_class'=>'w50'
+												),
+			'sql'					  => "varchar(255) NOT NULL default ''"
+		),
+		'nationality' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_players']['nationality'],
+			'exclude'                 => false,
+			'inputType'               => 'text',
+			'eval'                    => array(
+											'mandatory'=>false,
+											'maxlength'=>255,
+											'tl_class'=>'w50'
+												),
+			'sql'					  => "varchar(255) NOT NULL default ''"
+		),
+
+		'height' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_players']['height'],
 			'exclude'                 => false,
 			'inputType'               => 'text',
 			'eval'                    => array(
@@ -353,55 +391,30 @@ $GLOBALS['TL_DCA']['tl_spoma_clubs'] = array
 											'rgxp'=>'digit',
 											'tl_class'=>'w50'
 												),
-			'sql' 					  => "varchar(255) NOT NULL default ''"
+			'sql'					  => "varchar(255) NOT NULL default ''"
 		),
-		'information' => array
+		'weight' => array
 		(
-			'label' 				  => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['information'],
-		    'exclude' 				  => false,
-		    'inputType' 			  => 'textarea',
-		    'eval' 					  => array(
-		    'rte' 					  => 'tinyMCE'
-		            							),
-		    'sql' 					  => "text NULL"
-        ),
-
-		'hasinternal_page'=>array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['hasinternal_page'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_players']['weight'],
 			'exclude'                 => false,
-			'inputType'               => 'checkbox',
-			'eval'                    => array('submitOnChange'=>true),
-			'sql'					  => "char(1) NOT NULL default ''"
-		),
-		'internal_page' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['internal_page'],
-			'exclude'                 => false,
-			'inputType'               => 'pageTree',
-			'eval'                    => array('mandatory'=>false,'fieldType'=>'radio', 'tl_class'=>'clr'),
-			'sql'					  => "int(10) NOT NULL default '0'"
-		),
-
-		'ownclub' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_clubs']['ownclub'],
-			'exclude'                 => false,
-			'filter'				  => true,
-			'inputType'               => 'checkbox',
+			'inputType'               => 'text',
 			'eval'                    => array(
-											'mandatory'=>false
+											'mandatory'=>false,
+											'maxlength'=>255,
+											'rgxp'=>'digit',
+											'tl_class'=>'w50'
 												),
-			'sql' 					  => "char(1) NOT NULL default ''"
+			'sql'					  => "varchar(255) NOT NULL default ''"
 		)
+
 	)
 );
 
-class tl_spoma_clubs extends Backend
+
+class tl_spoma_players extends Backend
 {
 	public function editHeader($row, $href, $label, $title, $icon, $attributes)
 	{
 		return  '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ';
 	}
-
 }

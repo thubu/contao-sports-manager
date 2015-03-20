@@ -43,6 +43,9 @@ $GLOBALS['TL_LANG']['tl_spoma_clubs']['website']	= array('Homepage', 'Die Websei
 $GLOBALS['TL_LANG']['tl_spoma_clubs']['add_info'] = 'Zus&auml;tzliche Infos zum Verein';
 $GLOBALS['TL_LANG']['tl_spoma_clubs']['information'] = array('Weitere Informationen', 'Zus&auml;tzliche Informationen &uuml;ber den Verein');
 
+$GLOBALS['TL_LANG']['tl_spoma_clubs']['internal_page'] = 'Interne Seite des Vereins';
+$GLOBALS['TL_LANG']['tl_spoma_clubs']['hasinternal_page'] = array('Interne Seite', 'Interne Seite des Vereins festlegen');
+$GLOBALS['TL_LANG']['tl_spoma_clubs']['internal_page'] = array('Interne Seite ausw&auml;len', 'Interne Seite des Vereins ausw&auml;len');
 
 
 

@@ -62,6 +62,10 @@ $GLOBALS['TL_LANG']['tl_spoma_teams']['ownteam']	= array ('Eigene Mannschaft', '
 $GLOBALS['TL_LANG']['tl_spoma_teams']['add_information'] = 'Zus&auml;tzliche Infos zur Mannschaft';
 $GLOBALS['TL_LANG']['tl_spoma_teams']['information'] = array('Weitere Informationen', 'Zus&auml;tzliche Informationen zur Mannschaft');
 
+$GLOBALS['TL_LANG']['tl_spoma_teams']['internal_page'] = 'Interne Seite der Mannschaft';
+$GLOBALS['TL_LANG']['tl_spoma_teams']['hasinternal_page'] = array('Interne Seite', 'Interne Seite der Mannschaft festlegen');
+$GLOBALS['TL_LANG']['tl_spoma_teams']['internal_page'] = array('Interne Seite ausw&auml;len', 'Interne Seite der Mannschaft ausw&auml;len');
+
 
 /**
  * Reference

@@ -9,9 +9,9 @@
 
 
 /**
- * Table tl_spoma_teams_to_club
+ * Table tl_spoma_coach_to_team
  */
-$GLOBALS['TL_DCA']['tl_spoma_teams_to_club'] = array
+$GLOBALS['TL_DCA']['tl_spoma_coach_to_team'] = array
 (
 
 	// Config
@@ -19,13 +19,12 @@ $GLOBALS['TL_DCA']['tl_spoma_teams_to_club'] = array
 	(
 		'dataContainer'               => 'Table',
 		'enableVersioning'            => true,
-		'ptable'                      => 'tl_spoma_clubs',
+		'ptable'                      => 'tl_spoma_coach',
 		'sql' => array (
 							'keys' => array ('id' => 'primary'),
 							'KEY' => array ('pid' => 'pid'),
 						)
 	),
-
 
 
 	// List
@@ -35,14 +34,17 @@ $GLOBALS['TL_DCA']['tl_spoma_teams_to_club'] = array
 		(
 			'mode'                    => 4,
 			'fields'                  => array('team'),
-			'flag'                    => 11,
-			'panelLayout'             => 'filter;search,limit',
+			'flag'                    => 1,
 			'headerFields'            => array('name'),
+			'panelLayout'             => 'filter;search,limit',
 			'disableGrouping'		  => true,
-			'child_record_callback'   => array('tl_spoma_teams_to_club', 'listTeams')
+			'child_record_callback'   => array('tl_spoma_coach_to_team', 'listTeams')
 		),
 		'label' => array
 		(
+
+			'fields'                  => array('team'),
+			'format'                  => '%s',
 
 		),
 		'global_operations' => array
@@ -59,26 +61,26 @@ $GLOBALS['TL_DCA']['tl_spoma_teams_to_club'] = array
 		(
 			'edit' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_spoma_teams_to_club']['edit'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_spoma_coach_to_team']['edit'],
 				'href'                => 'act=edit',
 				'icon'                => 'edit.gif'
 			),
 			'copy' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_spoma_teams_to_club']['copy'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_spoma_coach_to_team']['copy'],
 				'href'                => 'act=copy',
 				'icon'                => 'copy.gif'
 			),
 			'delete' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_spoma_teams_to_club']['delete'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_spoma_coach_to_team']['delete'],
 				'href'                => 'act=delete',
 				'icon'                => 'delete.gif',
 				'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"'
 			),
 			'show' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_spoma_teams_to_club']['show'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_spoma_coach_to_team']['show'],
 				'href'                => 'act=show',
 				'icon'                => 'show.gif'
 			)
@@ -89,7 +91,7 @@ $GLOBALS['TL_DCA']['tl_spoma_teams_to_club'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array(''),
-		'default'                     => 'team;{dates},date_from,date_to;'
+		'default'                     => 'team;{dates},date_from,date_to;{personal},position;'
 	),
 
 	// Subpalettes
@@ -110,42 +112,53 @@ $GLOBALS['TL_DCA']['tl_spoma_teams_to_club'] = array
 		'tstamp' => array (
 			'sql' 					  => "int(10) unsigned NOT NULL default '0'"
 		),
-
 		'team' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_teams_to_club']['team'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_coach_to_team']['team'],
 			'exclude'                 => false,
 			'filter'				  => true,
 			'inputType'               => 'select',
 			'includeBlankOption'	  => true,
-			'options_callback'        => array('tl_spoma_teams_to_club', 'getTeams'),
+			'options_callback'        => array('tl_spoma_coach_to_team', 'getTeams'),
 			'eval'                    => array('mandatory'=>true, 'maxlength'=>255),
 		 	'sql'					  => "int(10) NOT NULL default '0'"
 		),
 		'date_from' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_teams_to_club']['date_from'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_coach_to_team']['date_from'],
+			'exclude'                 => false,
+			'filter'				  => true,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>false, 'rgxp'=>'date', 'datepicker'=>$this->getDatePickerString(), 'tl_class'=>'w50'),
+		 	'sql'					  => "int(10) NOT NULL default '0'"
+		),
+		'date_to' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_coach_to_team']['date_to'],
 			'exclude'                 => false,
 			'filter'				  => true,
 			'inputType'               => 'text',
 			'eval'                    => array('mandatory'=>false, 'rgxp'=>'date', 'datepicker'=>$this->getDatePickerString(), 'tl_class'=>'w50'),
 		 	'sql'					  => "varchar(10) NOT NULL default '0'"
-
 		),
-		'date_to' => array
+		'position' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_teams_to_club']['date_to'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_coach_to_team']['position'],
 			'exclude'                 => false,
 			'filter'				  => true,
 			'inputType'               => 'text',
-			'eval'                    => array('mandatory'=>false, 'rgxp'=>'date', 'datepicker'=>$this->getDatePickerString(), 'tl_class'=>'w50'),
-		 	'sql'					  => "varchar(10) NOT NULL default ''"
-
-		)
+			'eval'                    => array(
+											'mandatory'=>false,
+											'rgxp'=>'alnum',
+											'maxlength'=>255,
+											'tl_class'=>'w50'
+												),
+			'sql'					  => "varchar(255) NOT NULL default ''"
+		),
 	)
 );
 
-class tl_spoma_teams_to_club extends Backend
+class tl_spoma_coach_to_team extends Backend
 {
 	public function listTeams($arrRow)
 	{
@@ -178,4 +191,18 @@ class tl_spoma_teams_to_club extends Backend
 			}
 		return $return;
 	}
+	public function listTeam($arrRow)
+	{
+		$arrTeams = $this->Database->prepare("SELECT name FROM tl_lm_teams WHERE id=?")->execute($arrRow['team']);
+		$label="<div>" . $arrTeams->name . "</div>";
+		return $label;
+	}
+
+	public function getGrouplabel($label)
+	{
+		$arrClubs = $this->Database->prepare("SELECT name FROM tl_lm_clubs WHERE id=?")->execute($label);
+		$label = $arrClubs->name;
+		return $label;
+	}
+
 }

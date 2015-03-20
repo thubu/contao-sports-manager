@@ -32,6 +32,7 @@
  */
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'spoma_useredirectmatch';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'spoma_useredirectplayer';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'spoma_useredirectcoach';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'spoma_useredirectteam';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'spoma_useredirectclub';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'spoma_useredirectcontest';
@@ -41,7 +42,9 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'spoma_usefixed
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'spoma_usefixedcontest';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'spoma_usefixedmatch';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'spoma_usefixedplayer';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'spoma_usefixedcoach';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'spoma_usefixedstadium';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'spoma_linktype_coach';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'spoma_linktype_player';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'spoma_linktype_team';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'spoma_linktype_club';
@@ -72,6 +75,7 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['spoma_teamreader_matches'] = '{typ
 $GLOBALS['TL_DCA']['tl_content']['palettes']['spoma_playerreader_basic'] = '{type_legend},type,headline;{spoma_settings},spoma_usefixedplayer,spoma_se_friendly;{expert_legend:hide},cssID,space';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['spoma_resultform'] = '{type_legend},type,headline{spoma_settings},spoma_usefixedcontest;{expert_legend:hide},cssID,space';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['spoma_clubreader_basic'] = '{type_legend},type,headline;{spoma_settings},spoma_usefixedclub,spoma_showlogo,spoma_se_friendly;{spoma_redirect},spoma_useredirectteam;{expert_legend:hide},cssID,space';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['spoma_coachreader_basic'] = '{type_legend},type,headline;{spoma_settings},spoma_usefixedcoach,spoma_se_friendly;{expert_legend:hide},cssID,space';
 
 
 
@@ -81,11 +85,13 @@ $GLOBALS['TL_DCA']['tl_content']['subpalettes']['spoma_useredirectclub'] = 'spom
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['spoma_useredirectmatch'] = 'spoma_redirectmatch';
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['spoma_useredirectcontest'] = 'spoma_redirectcontest';
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['spoma_useredirectstadium'] = 'spoma_redirectstadium';
+$GLOBALS['TL_DCA']['tl_content']['subpalettes']['spoma_useredirectcoach'] = 'spoma_redirectcoach';
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['spoma_usefixedcontest'] = 'spoma_contest';
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['spoma_usefixedclub'] = 'spoma_club';
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['spoma_usefixedteam'] = 'spoma_team';
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['spoma_usefixedmatch'] = 'spoma_match';
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['spoma_usefixedplayer'] = 'spoma_player';
+$GLOBALS['TL_DCA']['tl_content']['subpalettes']['spoma_usefixedcoach'] = 'spoma_coach';
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['spoma_usefixedstadium'] = 'spoma_stadium';
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['spoma_linktype_player_NOL']='';
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['spoma_linktype_player_INT']='spoma_link_player_new_window';
@@ -111,7 +117,10 @@ $GLOBALS['TL_DCA']['tl_content']['subpalettes']['spoma_linktype_stadium_NOL']=''
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['spoma_linktype_stadium_INT']='spoma_link_stadium_new_window';
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['spoma_linktype_stadium_EXT']='spoma_link_stadium_new_window';
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['spoma_linktype_stadium_FIX']='spoma_redirectstadium,spoma_link_stadium_new_window';
-
+$GLOBALS['TL_DCA']['tl_content']['subpalettes']['spoma_linktype_coach_NOL']='';
+$GLOBALS['TL_DCA']['tl_content']['subpalettes']['spoma_linktype_coach_INT']='spoma_link_coach_new_window';
+$GLOBALS['TL_DCA']['tl_content']['subpalettes']['spoma_linktype_coach_EXT']='spoma_link_coach_new_window';
+$GLOBALS['TL_DCA']['tl_content']['subpalettes']['spoma_linktype_coach_FIX']='spoma_redirectcoach,spoma_link_coach_new_window';
 
 /**
  * Add fields
@@ -127,7 +136,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['spoma_contest'] = array
 	'exclude'                 => false,
 	'inputType'               => 'select',
 	'eval'                    => array('mandatory'=>true),
-	'options_callback'        => array('tl_content_lm', 'getContests'),
+	'options_callback'        => array('tl_content_spoma', 'getContests'),
 	'sql'					  => "int(10) NOT NULL default '0'"
 );
 $GLOBALS['TL_DCA']['tl_content']['fields']['spoma_showlogo'] = array
@@ -144,7 +153,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['spoma_team'] = array
 	'exclude'                 => false,
 	'inputType'               => 'select',
 	'eval'                    => array('mandatory'=>true),
-	'options_callback'        => array('tl_content_lm', 'getTeams'),
+	'options_callback'        => array('tl_content_spoma', 'getTeams'),
 	'sql'					  => "int(10) NOT NULL default '0'"
 
 );
@@ -154,7 +163,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['spoma_club'] = array
 	'exclude'                 => false,
 	'inputType'               => 'select',
 	'eval'                    => array('mandatory'=>true),
-	'options_callback'        => array('tl_content_lm', 'getClubs'),
+	'options_callback'        => array('tl_content_spoma', 'getClubs'),
 	'sql'					  => "int(10) NOT NULL default '0'"
 );
 $GLOBALS['TL_DCA']['tl_content']['fields']['spoma_stadium'] = array
@@ -163,12 +172,20 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['spoma_stadium'] = array
 	'exclude'                 => false,
 	'inputType'               => 'select',
 	'eval'                    => array('mandatory'=>true),
-	'options_callback'        => array('tl_content_lm', 'getStadium'),
+	'options_callback'        => array('tl_content_spoma', 'getStadium'),
 	'sql'					  => "int(10) NOT NULL default '0'"
 );
 $GLOBALS['TL_DCA']['tl_content']['fields']['spoma_redirectplayer'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['spoma_redirectplayer'],
+	'exclude'                 => false,
+	'inputType'               => 'pageTree',
+	'eval'                    => array('mandatory'=>true,'fieldType'=>'radio', 'tl_class'=>'clr'),
+	'sql'					  => "int(10) NOT NULL default '0'"
+);
+$GLOBALS['TL_DCA']['tl_content']['fields']['spoma_redirectcoach'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['spoma_redirectcoach'],
 	'exclude'                 => false,
 	'inputType'               => 'pageTree',
 	'eval'                    => array('mandatory'=>true,'fieldType'=>'radio', 'tl_class'=>'clr'),
@@ -222,6 +239,15 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['spoma_useredirectplayer'] = array
 	'eval'                    => array('submitOnChange'=>true),
 	'sql'					  => "char(1) NOT NULL default ''"
 );
+$GLOBALS['TL_DCA']['tl_content']['fields']['spoma_useredirectteam'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['spoma_useredirectteam'],
+	'exclude'                 => false,
+	'inputType'               => 'checkbox',
+	'eval'                    => array('submitOnChange'=>true),
+	'sql'					  => "char(1) NOT NULL default ''"
+);
+
 $GLOBALS['TL_DCA']['tl_content']['fields']['spoma_useredirectmatch'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['spoma_useredirectmatch'],
@@ -230,9 +256,9 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['spoma_useredirectmatch'] = array
 	'eval'                    => array('submitOnChange'=>true),
 	'sql'					  => "char(1) NOT NULL default ''"
 	);
-$GLOBALS['TL_DCA']['tl_content']['fields']['spoma_useredirectteam'] = array
+$GLOBALS['TL_DCA']['tl_content']['fields']['spoma_useredirectcoach'] = array
 (
-	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['spoma_useredirectteam'],
+	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['spoma_useredirectcoach'],
 	'exclude'                 => false,
 	'inputType'               => 'checkbox',
 	'eval'                    => array('submitOnChange'=>true),
@@ -320,7 +346,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['spoma_match'] = array
 	'exclude'                 => false,
 	'inputType'               => 'select',
 	'eval'                    => array('mandatory'=>true),
-	'options_callback'        => array('tl_content_lm', 'getMatches'),
+	'options_callback'        => array('tl_content_spoma', 'getMatches'),
 	'sql'					  => "int(10) NOT NULL default '0'"
 );
 $GLOBALS['TL_DCA']['tl_content']['fields']['spoma_usefixedplayer'] = array
@@ -337,7 +363,24 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['spoma_player'] = array
 	'exclude'                 => false,
 	'inputType'               => 'select',
 	'eval'                    => array('mandatory'=>true),
-	'options_callback'        => array('tl_content_lm', 'getPlayers'),
+	'options_callback'        => array('tl_content_spoma', 'getPlayers'),
+	'sql'					  => "int(10) NOT NULL default '0'"
+);
+$GLOBALS['TL_DCA']['tl_content']['fields']['spoma_usefixedcoach'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['spoma_usefixedcoach'],
+	'exclude'                 => false,
+	'inputType'               => 'checkbox',
+	'eval'                    => array('submitOnChange'=>true),
+	'sql'					  => "char(1) NOT NULL default ''"
+);
+$GLOBALS['TL_DCA']['tl_content']['fields']['spoma_coach'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['spoma_coach'],
+	'exclude'                 => false,
+	'inputType'               => 'select',
+	'eval'                    => array('mandatory'=>true),
+	'options_callback'        => array('tl_content_spoma', 'getCoach'),
 	'sql'					  => "int(10) NOT NULL default '0'"
 );
 $GLOBALS['TL_DCA']['tl_content']['fields']['spoma_usefixedstadium'] = array
@@ -354,7 +397,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['spoma_stadium'] = array
 	'exclude'                 => false,
 	'inputType'               => 'select',
 	'eval'                    => array('mandatory'=>true),
-	'options_callback'        => array('tl_content_lm', 'getStadium'),
+	'options_callback'        => array('tl_content_spoma', 'getStadium'),
 	'sql'					  => "int(10) NOT NULL default '0'"
 );
 $GLOBALS['TL_DCA']['tl_content']['fields']['spoma_se_friendly'] = array
@@ -394,6 +437,16 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['spoma_dateto'] = array
 $GLOBALS['TL_DCA']['tl_content']['fields']['spoma_linktype_player'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['spoma_linktype_player'],
+	'exclude'                 => false,
+	'inputType'               => 'select',
+	'eval'                    => array('mandatory'=>true,'submitOnChange'=>true),
+	'options'				  => array('NOL','FIX','INT','EXT'),
+	'reference'				  => &$GLOBALS['TL_LANG']['tl_content']['spoma_linktypes']['reference'],
+	'sql'					  => "char(3) NOT NULL default ''"
+);
+$GLOBALS['TL_DCA']['tl_content']['fields']['spoma_linktype_coach'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['spoma_linktype_coach'],
 	'exclude'                 => false,
 	'inputType'               => 'select',
 	'eval'                    => array('mandatory'=>true,'submitOnChange'=>true),
@@ -459,6 +512,14 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['spoma_link_player_new_window'] = arr
 	'eval'                    => array(),
 	'sql'					  => "char(1) NOT NULL default ''"
 );
+$GLOBALS['TL_DCA']['tl_content']['fields']['spoma_link_coach_new_window'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['spoma_link_new_window'],
+	'exclude'                 => false,
+	'inputType'               => 'checkbox',
+	'eval'                    => array(),
+	'sql'					  => "char(1) NOT NULL default ''"
+);
 $GLOBALS['TL_DCA']['tl_content']['fields']['spoma_link_team_new_window'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['spoma_link_new_window'],
@@ -499,7 +560,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['spoma_link_stadium_new_window'] = ar
 	'eval'                    => array(),
 	'sql'					  => "char(1) NOT NULL default ''"
 );
-class tl_content_lm extends Backend
+class tl_content_spoma extends Backend
 {
 	//Lists the contests in the database
 	public function getContests()
@@ -581,11 +642,11 @@ class tl_content_lm extends Backend
 		}
 		return $return;
 	}
-
+	//Lists the players in the database
 	public function getPlayers()
 	{
 		//Generate list of players
-		$objPlayers = $this->Database->prepare("SELECT id, name, sortstring FROM tl_spoma_players ORDER BY name ASC")->execute();
+		$objPlayers = $this->Database->prepare("SELECT id, surname, firstname, sortstring FROM tl_spoma_players ORDER BY surname ASC")->execute();
 
 		if ($objPlayers->numRows < 1)
 		{
@@ -598,11 +659,11 @@ class tl_content_lm extends Backend
 		{
 			if($objPlayers->sortstring=="")
 			{
-				$return[$GLOBALS['TL_LANG']['sportsmanager']['misc']['nosortstring']][$objPlayers->id] = $objPlayers->name;
+				$return[$GLOBALS['TL_LANG']['sportsmanager']['misc']['nosortstring']][$objPlayers->id] = $objPlayers->surname;
 			}
 			else
 			{
-				$return[$objPlayers->sortstring][$objPlayers->id] = $objPlayers->name;
+				$return[$objPlayers->sortstring][$objPlayers->id] = $objPlayers->surname;
 			}
 		}
 
@@ -634,7 +695,6 @@ class tl_content_lm extends Backend
 
 			return $return;
 		}
-
 		//Lists the stadium in the database
 		public function getStadium()
 		{
@@ -656,6 +716,32 @@ class tl_content_lm extends Backend
 				else
 				{
 					$return[$objStadium->sortstring][$objStadium->id] = $objStadium->name;
+				}
+			}
+
+			return $return;
+		}
+		//Lists the coach in the database
+		public function getCoach()
+		{
+			$objCoach = $this->Database->prepare("SELECT id, surname, firstname, sortstring FROM tl_spoma_coach ORDER BY surname ASC")->execute();
+
+			if ($objCoach->numRows < 1)
+			{
+				return array();
+			}
+
+			$return = array();
+
+			while ($objCoach->next())
+			{
+				if($objCoach->sortstring=="")
+				{
+					$return[$GLOBALS['TL_LANG']['sportsmanager']['misc']['nosortstring']][$objCoach->id] = $objCoach->surname;
+				}
+				else
+				{
+					$return[$objCoach->sortstring][$objCoach->id] = $objCoach->surname;
 				}
 			}
 

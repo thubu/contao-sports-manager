@@ -85,7 +85,7 @@ $GLOBALS['TL_DCA']['tl_spoma_teams'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'__selector__'                => array(''),
+		'__selector__'                => array('hasinternal_page'),
 		'default'                     => 'name, shortname, sortstring, gender, logo;
 										ownteam;
 										{team_adress}, street, street_number, zipcode, city, state, country;
@@ -93,14 +93,15 @@ $GLOBALS['TL_DCA']['tl_spoma_teams'] = array
 										{add_info}, founded, resolved, colour;
 										{team_location}, location_stadion, street_stadion, street_number_stadion, zipcode_stadion, city_stadion, state_stadion, country_stadion;
 										{team_training}, location_training, street_training, street_number_training, zipcode_training, city_training, state_training, country_training;
-										{add_information},information;'
+										{add_information}, information;
+										{internal_page}, hasinternal_page;'
 	),
 
-/**	// Subpalettes
+// Subpalettes
 	'subpalettes' => array
 	(
 		'hasinternal_page'            => 'internal_page'
-	),*/
+	),
 
 	'fields' => array 	(
 
@@ -532,6 +533,25 @@ $GLOBALS['TL_DCA']['tl_spoma_teams'] = array
 												),
 			'sql'					  => "varchar(255) NOT NULL default ''"
 		),
+
+		'hasinternal_page'=>array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_teams']['hasinternal_page'],
+			'exclude'                 => false,
+			'inputType'               => 'checkbox',
+			'eval'                    => array('submitOnChange'=>true),
+			'sql'					  => "char(1) NOT NULL default ''"
+		),
+		'internal_page' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_teams']['internal_page'],
+			'exclude'                 => false,
+			'inputType'               => 'pageTree',
+			'eval'                    => array('mandatory'=>false,'fieldType'=>'radio', 'tl_class'=>'clr'),
+			'sql'					  => "int(10) NOT NULL default '0'"
+		),
+
+
 		'ownteam' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_spoma_teams']['ownteam'],

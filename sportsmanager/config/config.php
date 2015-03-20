@@ -59,6 +59,11 @@
 	 (
 	    'tables' => array('tl_spoma_players','tl_spoma_players_to_team'),
 		'icon'   => 'system/modules/sportsmanager/assets/images/player.png'
+	 ),
+	 'tl_spoma_coach' => array
+	 (
+	    'tables' => array('tl_spoma_coach','tl_spoma_coach_to_team'),
+		'icon'   => 'system/modules/sportsmanager/assets/images/player.png'
 	 )
 
 );
@@ -112,6 +117,8 @@
 $GLOBALS['TL_CTE']['sportsmanager']['spoma_teamreader_basic'] = 'spoma_teamreader_basic';
 $GLOBALS['TL_CTE']['sportsmanager']['spoma_playerreader_basic'] = 'spoma_playerreader_basic';
 $GLOBALS['TL_CTE']['sportsmanager']['spoma_clubreader_basic'] = 'spoma_clubreader_basic';
+$GLOBALS['TL_CTE']['sportsmanager']['spoma_coachreader_basic'] = 'spoma_coachreader_basic';
+
 
 /**
  * BACK END FORM FIELDS

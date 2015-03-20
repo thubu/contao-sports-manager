@@ -20,6 +20,8 @@ $GLOBALS['TL_LANG']['MOD']['tl_spoma_clubs'] = array('Vereine', 'Vereine erfasse
 $GLOBALS['TL_LANG']['MOD']['tl_spoma_contests'] = array('Wettbewerbe', 'Ligen und Turniere mit Runden und Matches verwalten');
 $GLOBALS['TL_LANG']['MOD']['tl_spoma_teams'] = array('Mannschaften', 'Mannschaften erfassen und verwalten, Spieler zuordnen');
 $GLOBALS['TL_LANG']['MOD']['tl_spoma_players'] = array('Spieler', 'Spieler erfassen und verwalten,Vereinen zuordnen.');
+$GLOBALS['TL_LANG']['MOD']['tl_spoma_coach'] = array('Trainer', 'Trainer erfassen und verwalten,Vereinen zuordnen.');
+$GLOBALS['TL_LANG']['MOD']['tl_spoma_referee'] = array('Schiedsrichter', 'Schiedsrichter erfassen und verwalten,Vereinen zuordnen.');
 /**
  * Front end modules
  */

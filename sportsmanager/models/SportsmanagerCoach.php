@@ -15,7 +15,7 @@
 /**
  * Namespace
  */
-namespace SportmanagerTeams2Clubs;
+namespace SportmanagerCoach;
 
 /**
  * Class SportsmanagerModel
@@ -24,13 +24,13 @@ namespace SportmanagerTeams2Clubs;
  * @author     Thomas Unterbusch
  * @package    Devtools
  */
-class SportmanagerTeams2Clubs extends \Model
+class SportmanagerCoach extends \Model
 {
 
 	/**
 	 * Name of the table
 	 * @var string
 	 */
-	protected static $strTable = 'tl_spoma_teams_to_club';
+	protected static $strTable = 'tl_spoma_coach';
 
 }
